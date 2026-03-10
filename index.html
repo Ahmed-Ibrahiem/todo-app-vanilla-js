@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo list</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>My Todo List</h1>
+    </header>
+
+    <!-- Start Todo Contaienr -->
+    <section class="todo_container">
+        <form id="todo_form">
+            <!-- todo title -->
+            <div class="todo_title box">
+                <label for="title" class="todo_label">What's on your todo </label>
+                <input type="text" id="title" placeholder="do something" />
+            </div>
+
+            <!-- todo category -->
+            <div id="todo_category" class="box">
+                <label class="todo_label">Pick a category</label>
+                <!-- category options -->
+                <div class="category_options">
+                    <div class="">
+                        <span>Business</span>
+                    </div>
+                    <div class="category_active">
+                        <span>Personal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add todo buttton -->
+            <button id="add_todo" class="" type="submit">Add Todo</button>
+        </form>
+
+        <!-- start not Completed tasks list -->
+        <div id="not_completed_tasks" class="todo_list box">
+            <h2 class="todo_label">
+                Not Completed Tasks
+            </h2>
+
+            <!-- todo ui -->
+            <ul>
+                <li>
+                    <div class="left">
+                        <input type="checkbox" id="task">
+                        <label for="task">Go to work</label>
+                        <input type="text" id="update_input" value="Go to work" />
+                    </div>
+                    <div class="right">
+                        <button id="update">update</button>
+                        <button id="delete">delete</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- start t Complated tasks list -->
+        <div id="completed_tasks" class="todo_list box">
+            <h2 class="todo_label">
+                Completed Tasks
+            </h2>
+
+            <!-- todo ui -->
+            <ul>
+                <li>
+                    <div class="left">
+                        <input type="checkbox" id="task">
+                        <label for="task">Go to work</label>
+                        <input type="text" id="update_input" value="Go to work" />
+                    </div>
+                    <div class="right">
+                        <button id="delete">delete</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </section>
+
+    <script type="module" src="/dist/Helpers/Helpers.js"></script>
+    <script type="module" src="/dist/Server/Fech_data.js"></script>
+    <script type="module" src="/dist/index.js"></script>
+</body>
+
+</html>
