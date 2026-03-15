@@ -68,6 +68,10 @@ header h1 {
   opacity: 0.7;
 }
 
+.todo_title input.not_valid {
+  border: 1px solid red;
+}
+
 .todo_title input::placeholder {
   color: white;
 }
@@ -83,7 +87,7 @@ header h1 {
   gap: 20px;
 }
 
-.category_options > div {
+.category_options>div {
   background-color: white;
   display: flex;
   align-items: center;
@@ -94,7 +98,7 @@ header h1 {
   cursor: pointer;
 }
 
-.category_options > .category_active {
+.category_options>.category_active {
   color: white;
   background-color: #0066ff;
 }
@@ -105,50 +109,60 @@ header h1 {
   color: gray;
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 #add_todo.active {
-  pointer-events: visible;
   background-color: #0066ff;
   color: white;
-  cursor: pointer;
 }
 
 #add_todo.active:active {
   scale: 0.98;
 }
 
-.todo_list > ul {
+.todo_list>ul {
   display: flex;
   flex-direction: column;
   gap: 10px;
   list-style: none;
+  max-height: 60px;
+  overflow: auto;
+  padding: 5px 0;
 }
 
-.todo_list > ul > li,
-.todo_list > ul > li .left {
+.todo_list>ul>li,
+.todo_list>ul>li .left {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.todo_list > ul > li .left label,
-.todo_list > ul > li .left input#update_input {
+.todo_list>ul>li .left label,
+.todo_list>ul>li .left input#update_input {
   font-size: 16px;
   font-weight: 500;
 }
 
-.todo_list > ul > li .left input#update_input {
+.todo_list>ul>li .left label {
+  cursor: pointer;
+}
+
+.todo_list>ul>li .left input#update_input {
   display: none;
 }
 
-.todo_list > ul > li .left input.active {
+.todo_list>ul>li.updating .left input#update_input {
   display: block;
 }
 
-.todo_list > ul > li {
+.todo_list>ul>li.updating .left label {
+  display: none;
+}
+
+
+.todo_list>ul>li {
   padding: 10px;
   border-radius: 5px;
   background-color: white;
@@ -156,7 +170,7 @@ header h1 {
   gap: 20px;
 }
 
-.todo_list > ul > li .right button {
+.todo_list>ul>li .right button {
   padding: 6px 12px;
   font-size: 14px;
   background-color: orangered;
@@ -165,15 +179,15 @@ header h1 {
   cursor: pointer;
 }
 
-.todo_list > ul > li .right button:active {
+.todo_list>ul>li .right button:active {
   scale: 0.9;
 }
 
-.todo_list > ul > li .right button#update {
+.todo_list>ul>li .right button.update {
   background-color: orange;
 }
 
-.todo_list > ul > li .right button#completed {
+.todo_list>ul>li .right button.completed {
   background-color: rgb(0, 132, 255);
 }
 
@@ -184,6 +198,7 @@ input[type="checkbox"] {
   border: 1px solid #ccc;
   border-radius: 3px;
   position: relative;
+  cursor: pointer;
 }
 
 input[type="checkbox"]::after {
@@ -205,9 +220,27 @@ input[type="checkbox"]::after {
   rotate: 360deg;
   scale: 0;
   transition: 0.3s;
+  cursor: pointer;
+}
+
+.empty_tasks_message {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 input[type="checkbox"]:checked::after {
   scale: 1;
   rotate: 0deg;
+}
+
+::-webkit-scrollbar {
+  appearance: none;
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #999;
 }

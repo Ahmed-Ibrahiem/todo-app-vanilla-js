@@ -1,26 +1,30 @@
 [1] CategoryActive State Toggle when user clicked on any of category options
 
 [2] When user click on "add_task" btn.
-    [2.1] Get the task title form task input
+    [2.1] PreventDefault Behavior
+    [2.2] Get the task title form task input
     If user not input the task text:
-        [2.2] Show UI notifi.
-        [2.3] And focus the task text input element.
+        [2.3] Show UI notifi.
+        [2.2] And focus the task text input element.
      If user input the task text:
-        [2.2] Get the task text and it's category.
-        [2.3] Add the task (id , title , completed "ture or false") to not completed tasks array.
-        [2.4] Rerender the not completed tasks container ul element.
+        [2.3] Get the task text and it's category.
+        [2.4] Add the task (id , title , completed "ture or false") to not completed tasks array.
+        [2.5] Rerender the not completed tasks container ul element.
+        [2.6] Make Task's title input to default value.
+        [2.7] Save it localstorage.
 
 [3] When user click on "complete" btn in not completed task element.
-    [3.1] Get taks's id.
-    [3.2] Add the taks's id to completed tasks array.
-    [3.3] Rerender the completed tasks container ul element.
+    [3.1] Get task by tasks id.
+    [3.2] Add the taks to completed tasks array.
+    [3.3] Remove the completed task from not completed tasks arr
+    [3.4] Update the localstorage for each (completed & not completed) arr
+    [3.5] Rerender for each of completed and not completed array.
 
 [4] When user click on "update" btn in not completed task element.
-    [4.1] Hide task label element and show task input element.
-    [4.2] After finish user from task update and he clicked on "done" btn or clicked on outside task.
-    [4.3] Get task's id that matched with "update" btn's id , and get task data by using task id.
-    [4.4] Update task's title.
-    [4.5] Go to step [5.3].
+    [4.1] Get the element that user want update his title.
+    [4.2] Hide task label element and show task input element.
+    [4.3] Replace the new task with the old task by using id.
+    [4.4] Render for each of complete and not completed array.
 
 [5] When user click on "Delete" btn in not completed task element.
     [5.1] Get the task's id from completed tasks array that matched with delete btn's id .
