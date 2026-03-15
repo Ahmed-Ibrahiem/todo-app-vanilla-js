@@ -1,5 +1,5 @@
 const taskTitleInput = document.getElementById("task_title") as HTMLInputElement;
-const taskCategoryOptions = document.querySelectorAll('.category_options > div');
+const taskCategoryOptions =  document.querySelectorAll<HTMLDivElement>('.category_options > div');
 const addTaskBtn = document.getElementById("add_todo") as HTMLButtonElement;
 const notCompletedTasksContainer = document.getElementById('not_completed_tasks_container') as HTMLUListElement;
 const completedTasksContainer = document.getElementById('completed_tasks_container') as HTMLUListElement;
@@ -29,3 +29,12 @@ const Completedtask = `
     </div>
 </li>
 `
+
+// CategoryActive State Toggle
+taskCategoryOptions.forEach((element ) =>{
+    element.addEventListener('click' , ()=>{
+        taskCategoryOptions.forEach(ele => ele.classList.remove('category_active'));
+        element.classList.add('category_active')
+    })
+})
+

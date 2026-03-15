@@ -1,38 +1,35 @@
-[1] Get task from user.
+[1] CategoryActive State Toggle when user clicked on any of category options
 
-[2] Get the category task.
+[2] When user click on "add_task" btn.
+    [2.1] Get the task title form task input
+    If user not input the task text:
+        [2.2] Show UI notifi.
+        [2.3] And focus the task text input element.
+     If user input the task text:
+        [2.2] Get the task text and it's category.
+        [2.3] Add the task (id , title , completed "ture or false") to not completed tasks array.
+        [2.4] Rerender the not completed tasks container ul element.
 
-[3] When user click on "add_task" btn.
+[3] When user click on "complete" btn in not completed task element.
+    [3.1] Get taks's id.
+    [3.2] Add the taks's id to completed tasks array.
+    [3.3] Rerender the completed tasks container ul element.
 
-[4] If user not input the task text:
-    [4.1] Show UI notifi.
-    [4.2] And focus the task text input element.
+[4] When user click on "update" btn in not completed task element.
+    [4.1] Hide task label element and show task input element.
+    [4.2] After finish user from task update and he clicked on "done" btn or clicked on outside task.
+    [4.3] Get task's id that matched with "update" btn's id , and get task data by using task id.
+    [4.4] Update task's title.
+    [4.5] Go to step [5.3].
 
-[5] If user input the task text:
-    [5.1] Get the task text and it's category.
-    [5.2] Add the task (id , title , completed "ture or false") to not completed tasks array.
-    [5.3] Rerender the not completed tasks container ul element.
+[5] When user click on "Delete" btn in not completed task element.
+    [5.1] Get the task's id from completed tasks array that matched with delete btn's id .
+    [5.2] Delete the task from not completed array by using taks's id.
+    [5.3] Rerender the not completed tasks elements
 
-[6] When user click on "complete" btn in not completed task element.
-    [6.1] Get taks's id.
-    [6.2] Add the taks's id to completed tasks array.
-    [6.3] Rerender the completed tasks container ul element.
-
-[7] When user click on "update" btn in not completed task element.
-    [7.1] Hide task label element and show task input element.
-    [7.2] After finish user from task update and he clicked on "done" btn or clicked on outside task.
-    [7.3] Get task's id that matched with "update" btn's id , and get task data by using task id.
-    [7.4] Update task's title.
-    [7.5] Go to step [5.3].
-
-[8] When user click on "Delete" btn in not completed task element.
-    [8.1] Get the task's id from completed tasks array that matched with delete btn's id .
-    [8.2] Delete the task from not completed array by using taks's id.
-    [8.3] Rerender the not completed tasks elements
-
-[9] When user click on "Delete" btn in completed task element.
-    [9.1] Get the task's id from not completed tasks array that matched with delete btn's id.
-    [9.2] Delete the task from completed array by using taks's id.
-    [9.3] Rerender the completed tasks elements
+[6] When user click on "Delete" btn in completed task element.
+    [6.1] Get the task's id from not completed tasks array that matched with delete btn's id.
+    [6.2] Delete the task from completed array by using taks's id.
+    [6.3] Rerender the completed tasks elements
 
 

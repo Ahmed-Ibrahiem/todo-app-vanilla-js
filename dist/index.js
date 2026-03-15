@@ -28,5 +28,12 @@ const Completedtask = `
     </div>
 </li>
 `;
+// CategoryActive State Toggle
+taskCategoryOptions.forEach((element) => {
+    element.addEventListener('click', () => {
+        taskCategoryOptions.forEach(ele => ele.classList.remove('category_active'));
+        element.classList.add('category_active');
+    });
+});
 export {};
 //# sourceMappingURL=index.js.map
