@@ -173,6 +173,10 @@ header h1 {
   background-color: orange;
 }
 
+.todo_list > ul > li .right button#completed {
+  background-color: rgb(0, 132, 255);
+}
+
 input[type="checkbox"] {
   appearance: none;
   width: 18px;

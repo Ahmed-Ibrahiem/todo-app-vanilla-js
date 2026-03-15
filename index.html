@@ -24,8 +24,8 @@
         <form id="todo_form">
             <!-- todo title -->
             <div class="todo_title box">
-                <label for="title" class="todo_label">What's on your todo </label>
-                <input type="text" id="title" placeholder="do something" />
+                <label for="task_title" class="todo_label">What's on your todo </label>
+                <input type="text" id="task_title" placeholder="do something" />
             </div>
 
             <!-- todo category -->
@@ -53,7 +53,7 @@
             </h2>
 
             <!-- todo ui -->
-            <ul>
+            <ul id="not_completed_tasks_container">
                 <li>
                     <div class="left">
                         <input type="checkbox" id="task">
@@ -61,8 +61,9 @@
                         <input type="text" id="update_input" value="Go to work" />
                     </div>
                     <div class="right">
-                        <button id="update">update</button>
-                        <button id="delete">delete</button>
+                        <button id="completed">Complete</button>
+                        <button id="update">Update</button>
+                        <button id="delete">Delete</button>
                     </div>
                 </li>
             </ul>
@@ -75,7 +76,7 @@
             </h2>
 
             <!-- todo ui -->
-            <ul>
+            <ul id="completed_tasks_container">
                 <li>
                     <div class="left">
                         <input type="checkbox" id="task1">
@@ -83,7 +84,7 @@
                         <input type="text" id="update_input" value="Go to work" />
                     </div>
                     <div class="right">
-                        <button id="delete">delete</button>
+                        <button id="delete">Delete</button>
                     </div>
                 </li>
             </ul>
