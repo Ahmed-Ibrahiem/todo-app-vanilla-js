@@ -18,10 +18,12 @@ class Tasks {
 }
 let completedTasksArr = JSON.parse(localStorage.getItem("completedTasks") || "[]");
 let notCompletedTasksarr = JSON.parse(localStorage.getItem("notCompletedTasks") || "[]");
+let disabledTasksArr = JSON.parse(localStorage.getItem("disabledTasks") || "[]");
 // update localStroage "to make it reusable"
 const updateLocalStorage = () => {
     localStorage.setItem("notCompletedTasks", JSON.stringify(notCompletedTasksarr));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasksArr));
+    localStorage.setItem("disabledTasks", JSON.stringify(disabledTasksArr));
 };
 // =======================================================================
 // [1] CategoryActive State Toggle when user clicked on any of category options
@@ -43,9 +45,9 @@ const renderNotCompletedTasks = () => {
     else {
         // Create li elements depend on the notCompletedTasksarr of data
         notCompletedTasksarr.forEach((data, index) => {
-            notCompletedTasksContainer.innerHTML += `  <li  data-id="${data.id}">
+            notCompletedTasksContainer.innerHTML += `  <li class="not_completed_list task_element" data-id="${data.id}">
         <div class="left">
-            <input type="checkbox" id="task${index}">
+            <input type="checkbox" class="disabled_btn" id="task${index}">
             <label for="task${index}">${data.title}</label>
             <input type="text" class="update_input" value="${data.title}" />
         </div>
@@ -61,14 +63,38 @@ const renderNotCompletedTasks = () => {
 // Add event listner to all buttons in task element
 notCompletedTasksContainer.addEventListener("click", (e) => {
     const btn = e.target;
+    const disabledBtn = e.target;
     const taskElement = btn.closest("li");
     if (!taskElement)
         return;
     if (btn.classList.contains("completed"))
-        handleCompletedTasks(btn.dataset.id);
+        handleCompletedTasks(taskElement.dataset.id);
     if (btn.classList.contains("update")) {
         if (btn.dataset.mode === "updating")
             updateTask(taskElement);
+    }
+    if (btn.classList.contains("delete"))
+        deleteTasks(taskElement);
+    if (disabledBtn.classList.contains("disabled_btn")) {
+        // [6.1] if task id is includes in disabledTasksArr then: remove from it.
+        //       else: Push in it.
+        toggleDisabledTasks(taskElement.dataset.id);
+        disabledTask();
+    }
+});
+completedTasksContainer.addEventListener("click", (e) => {
+    const btn = e.target;
+    const taskElement = btn.closest("li");
+    const disabledBtn = e.target;
+    if (!taskElement)
+        return;
+    if (btn.classList.contains("delete"))
+        deleteTasks(taskElement);
+    if (disabledBtn.classList.contains("disabled_btn")) {
+        // [6.1] if task id is includes in disabledTasksArr then: remove from it.
+        //       else: Push in it.
+        toggleDisabledTasks(taskElement.dataset.id);
+        disabledTask();
     }
 });
 // Render notCompleted Tasks Container
@@ -77,18 +103,18 @@ const renderCompletedTasks = () => {
     completedTasksContainer.innerHTML = ``;
     // if notCompletedTasksarr is empty then show the empty tasks message
     if (completedTasksArr.length == 0) {
-        completedTasksContainer.innerHTML = `<div class="empty_tasks_message">-------- No Tasks Yet --------</div>`;
+        completedTasksContainer.innerHTML = `<div class="empty_tasks_message ">-------- No Tasks Yet --------</div>`;
     }
     else {
         // Create li elements depend on the notCompletedTasksarr of data
         completedTasksArr.forEach((data) => {
-            completedTasksContainer.innerHTML += `  <li data-id="${data.id}">
+            completedTasksContainer.innerHTML += `  <li class="completed_list task_element" data-id="${data.id}">
         <div class="left">
-            <input type="checkbox" id="task">
+            <input type="checkbox" class="disabled_btn" class="" id="task">
             <label for="task">${data.title}</label>
         </div>
         <div class="right">
-            <button id="delete" type="button" data-id="${data.id}">Delete</button>
+            <button class="delete" type="button" data-id="${data.id}">Delete</button>
         </div>
     </li>`;
         });
@@ -180,6 +206,7 @@ const updateTask = (taskElement) => {
     const updateBtn = taskElement.querySelector(".update");
     updateBtn.textContent = "Finish";
     updateBtn.dataset.mode = "finish_update";
+    // [4.3] Replace the new task with the old task by using id.
     // Create Function that handle finish updating operation
     const changeTask = () => {
         const oldTask = notCompletedTasksarr.find((task) => task.id === id);
@@ -190,6 +217,7 @@ const updateTask = (taskElement) => {
             title: taskUpdateInput.value,
         };
         const notCompletedList = notCompletedTasksarr.map((task) => task.id === id ? newTask : task);
+        // [4.4] Render for each of complete and not completed array.
         notCompletedTasksarr = notCompletedList;
         updateLocalStorage();
         updateBtn.textContent = "Update";
@@ -206,5 +234,60 @@ const updateTask = (taskElement) => {
         }
     });
 };
+// =======================================================================
+// [5] When user click on "Delete" btn in not completed task element.
+const deleteTasks = (taskElement) => {
+    // [5.1] Get the taskElement.
+    if (taskElement.classList.contains("completed_list")) {
+        // [5.2] Delete the task from task array by using taks's id.
+        const newTasks = completedTasksArr.filter((task) => task.id !== taskElement.dataset.id);
+        completedTasksArr = newTasks;
+    }
+    else if (taskElement.classList.contains("not_completed_list")) {
+        const newTasks = notCompletedTasksarr.filter((task) => task.id !== taskElement.dataset.id);
+        notCompletedTasksarr = newTasks;
+    }
+    // [5.3] Rerender the not completed tasks elements
+    renderCompletedTasks();
+    renderNotCompletedTasks();
+    updateLocalStorage();
+};
+// =======================================================================
+// [6] When user click "desabled" btn in task element
+const toggleDisabledTasks = (id) => {
+    // [6.1] if task id is includes in disabledTasksArr then: remove from it.
+    //       else: Push in it.
+    if (disabledTasksArr.includes(id)) {
+        let newTasks = [];
+        newTasks = [...disabledTasksArr.filter((task) => task !== id)];
+        disabledTasksArr = newTasks;
+    }
+    else {
+        disabledTasksArr.push(id);
+    }
+    // [6.2] Update localstorage.
+    updateLocalStorage();
+};
+const disabledTask = () => {
+    // [6.3] Get all taskElement.
+    const allTasksElement = document.querySelectorAll("li.task_element");
+    allTasksElement.forEach((ele) => {
+        // [6.4] Loop on these elements and if it's dataset.id is includes in disabledTasksArr then:
+        const disabledBtn = ele.querySelector(".disabled_btn");
+        if (disabledTasksArr.includes(ele.dataset.id)) {
+            // * Make his disabled btn is checked.
+            ele.classList.add("disabled");
+            // * Add class "disabled" to this element.
+            disabledBtn.checked = true;
+        }
+        else {
+            // * Remove class "disabled" to this element.
+            ele.classList.remove("disabled");
+            // * Make his disabled btn is unChecked.
+            disabledBtn.checked = false;
+        }
+    });
+};
+disabledTask();
 export {};
 //# sourceMappingURL=index.js.map

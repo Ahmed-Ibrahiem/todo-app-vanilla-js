@@ -26,14 +26,22 @@
     [4.3] Replace the new task with the old task by using id.
     [4.4] Render for each of complete and not completed array.
 
-[5] When user click on "Delete" btn in not completed task element.
-    [5.1] Get the task's id from completed tasks array that matched with delete btn's id .
-    [5.2] Delete the task from not completed array by using taks's id.
+[5] When user click on "Delete" btn in task element.
+    [5.1] Get the taskElement.
+    [5.2] Delete the task from task array by using taks's id.
     [5.3] Rerender the not completed tasks elements
 
-[6] When user click on "Delete" btn in completed task element.
-    [6.1] Get the task's id from not completed tasks array that matched with delete btn's id.
-    [6.2] Delete the task from completed array by using taks's id.
-    [6.3] Rerender the completed tasks elements
+[6] When user click "desabled" btn in task element
+    [6.1] if task id is includes in disabledTasksArr then: remove from it.
+        else: Push in it.
+    [6.2] Update localstorage.
+    [6.3] Get all taskElement.
+    [6.4] Loop on these elements and if it's dataset.id is includes in disabledTasksArr then:
+            * Add class "disabled" to this element.
+            * Make his disabled btn is checked.
+          else: 
+            * Remove class "disabled" to this element.
+            * Make his disabled btn is unChecked.
+
 
 

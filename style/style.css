@@ -170,6 +170,14 @@ header h1 {
   gap: 20px;
 }
 
+.todo_list>ul>li.disabled{
+  opacity: 0.5;
+}
+
+.todo_list>ul>li.disabled button{
+  pointer-events: none;
+}
+
 .todo_list>ul>li .right button {
   padding: 6px 12px;
   font-size: 14px;
