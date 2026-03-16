@@ -47,29 +47,30 @@ const renderNotCompletedTasks = () => {
         <div class="left">
             <input type="checkbox" id="task${index}">
             <label for="task${index}">${data.title}</label>
-            <input type="text" id="update_input" value="${data.title}" />
+            <input type="text" class="update_input" value="${data.title}" />
         </div>
         <div class="right">
-            <button class="completed" data-id="${data.id}">Complete</button>
-            <button class="update" data-mode="updating" data-id="${data.id}">Update</button>
-            <button class="delete" data-id="${data.id}">Delete</button>
+            <button class="completed" type="button" data-id="${data.id}">Complete</button>
+            <button class="update" type="button" data-mode="updating" data-id="${data.id}">Update</button>
+            <button class="delete" type="button" data-id="${data.id}">Delete</button>
         </div>
     </li>`;
         });
-        // add event listner to tasks
-        const getAllCompletedBtns = document.querySelectorAll("#not_completed_tasks_container .completed");
-        const getAllUpdateBtns = document.querySelectorAll("#not_completed_tasks_container .update");
-        getAllCompletedBtns.forEach((btn) => {
-            btn.addEventListener("click", () => handleCompletedTasks(btn.dataset.id));
-        });
-        getAllUpdateBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                if (btn.dataset.mode == "updating")
-                    updateTask(btn.dataset.id);
-            });
-        });
     }
 };
+// Add event listner to all buttons in task element
+notCompletedTasksContainer.addEventListener("click", (e) => {
+    const btn = e.target;
+    const taskElement = btn.closest("li");
+    if (!taskElement)
+        return;
+    if (btn.classList.contains("completed"))
+        handleCompletedTasks(btn.dataset.id);
+    if (btn.classList.contains("update")) {
+        if (btn.dataset.mode === "updating")
+            updateTask(taskElement);
+    }
+});
 // Render notCompleted Tasks Container
 const renderCompletedTasks = () => {
     // Clear All Element
@@ -85,10 +86,9 @@ const renderCompletedTasks = () => {
         <div class="left">
             <input type="checkbox" id="task">
             <label for="task">${data.title}</label>
-            <input type="text" id="update_input" value="${data.title}" />
         </div>
         <div class="right">
-            <button id="delete" data-id="${data.id}">Delete</button>
+            <button id="delete" type="button" data-id="${data.id}">Delete</button>
         </div>
     </li>`;
         });
@@ -114,13 +114,7 @@ const handleAddTaskClicked = (e) => {
     // If user input the task text:
     else {
         // [2.3] Get the task text and it's category.
-        const TASK = {
-            id: crypto.randomUUID(),
-            title: taskTitleInput.value,
-            completed: false,
-            category: taskCategory,
-        };
-        const newTask = new Tasks(TASK.id, TASK.title, TASK.completed, TASK.category);
+        const newTask = new Tasks(crypto.randomUUID(), taskTitleInput.value, false, taskCategory);
         // [2.4] Add the task (id , title , completed "ture or false") to not completed tasks array.
         notCompletedTasksarr.push(newTask);
         // [2.5] Rerender the not completed tasks container ul element.
@@ -167,16 +161,18 @@ const handleCompletedTasks = (id) => {
 };
 // =======================================================================
 // [4] When user click on "update" btn in not completed task element.
-const updateTask = (id) => {
+const updateTask = (taskElement) => {
     // [4.1] Get the element that user want update his title.
-    const taskElement = Array.from(document.querySelectorAll("#not_completed_tasks_container li")).find((ele) => ele.dataset.id == id) || undefined;
-    if (taskElement == undefined)
+    if (!taskElement)
         return;
-    // [4.1] Hide task label element and show task input element.
+    const id = taskElement.dataset.id;
+    if (!id)
+        return;
+    // [4.2] Hide task label element and show task input element.
     // Add the updating class to li element to show the title input and hide the title label
     taskElement.classList.add("updating");
     // Get the title input to let user update the task's title
-    const taskUpdateInput = taskElement.querySelector("#update_input");
+    const taskUpdateInput = taskElement.querySelector(".update_input");
     // Focus on the title input to make the user relize he can edit the task
     taskUpdateInput.focus();
     taskUpdateInput.select();
@@ -199,6 +195,8 @@ const updateTask = (id) => {
         updateBtn.textContent = "Update";
         updateBtn.dataset.mode = "updating";
         renderNotCompletedTasks();
+        taskUpdateInput.removeEventListener("blur", changeTask);
+        updateBtn.removeEventListener("click", changeTask);
     };
     taskUpdateInput.addEventListener("blur", changeTask);
     updateBtn.addEventListener("click", (e) => {

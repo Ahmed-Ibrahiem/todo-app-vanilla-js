@@ -5,7 +5,7 @@
     [2.2] Get the task title form task input
     If user not input the task text:
         [2.3] Show UI notifi.
-        [2.2] And focus the task text input element.
+        [2.4] And focus the task text input element.
      If user input the task text:
         [2.3] Get the task text and it's category.
         [2.4] Add the task (id , title , completed "ture or false") to not completed tasks array.

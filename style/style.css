@@ -140,7 +140,7 @@ header h1 {
 }
 
 .todo_list>ul>li .left label,
-.todo_list>ul>li .left input#update_input {
+.todo_list>ul>li .left input.update_input {
   font-size: 16px;
   font-weight: 500;
 }
@@ -149,11 +149,11 @@ header h1 {
   cursor: pointer;
 }
 
-.todo_list>ul>li .left input#update_input {
+.todo_list>ul>li .left input.update_input {
   display: none;
 }
 
-.todo_list>ul>li.updating .left input#update_input {
+.todo_list>ul>li.updating .left input.update_input {
   display: block;
 }
 
