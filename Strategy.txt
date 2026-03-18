@@ -12,6 +12,7 @@
         [2.5] Rerender the not completed tasks container ul element.
         [2.6] Make Task's title input to default value.
         [2.7] Save it localstorage.
+        [2.8] Return the UI elements to default statues
 
 [3] When user click on "complete" btn in not completed task element.
     [3.1] Get task by tasks id.
